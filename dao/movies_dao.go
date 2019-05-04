@@ -56,6 +56,7 @@ func (m *MoviesDAO) Delete(movie Movie) error {
 	if err != nil {
 		log.Fatal("There was an error when deleting movie with id:", movie.ID)
 	}
+	return err
 }
 
 func (m *MoviesDAO) Update(movie Movie) error {
@@ -63,4 +64,5 @@ func (m *MoviesDAO) Update(movie Movie) error {
 	if err != nil {
 		log.Fatal("There was an error when updating movie with id:", movie.ID)
 	}
+	return err
 }

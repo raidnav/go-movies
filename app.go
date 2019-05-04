@@ -58,7 +58,16 @@ func CreateMovieEndPoint(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateMovieEndPoint(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "not implemented yet !")
+	defer r.Body.Close()
+	var movie Movie
+	if err := json.NewDecoder(r.Body).Decode(&movie); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid payload request")
+		return
+	}
+	if err := dao.Update(movie); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+	}
+	respondWithJson(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
 func DeleteMovieEndPoint(w http.ResponseWriter, r *http.Request) {
